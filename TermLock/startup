@@ -1,0 +1,28 @@
+--FILE    : startup
+--AUTHOR  : TriaNaN Corp.
+--VERSION : 1.0
+--DESCRIP :
+--    Installs TermLock by copying it onto the
+--    target device upon startup, sets up the
+--    pswd.txt file then runs
+--    TermLock on the device.
+
+--Set up username and password:
+print("TermLock Installer Wizard - v1.0")
+write("Please enter new username: ")
+local user = io.read()
+write("\nPlease enter new password: ")
+local pswd = io.read()
+print("Setting up profile for "..user)
+--Create pswd file for user:
+local profile = fs.open("pswd.txt", "w")
+profile.writeLine(user)
+profile.writeLine(pswd)
+profile.close()
+sleep(2)
+
+print("Installing TermLock...")
+fs.copy("disk/termLock.lua", "startup")
+print("Success")
+shell.run("startup")
+
